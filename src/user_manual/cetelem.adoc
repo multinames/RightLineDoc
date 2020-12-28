@@ -20,7 +20,7 @@
 
 ====== Архитектура client-app
 
-[source,sh]
+[source,asciidoc]
 
 sbp-connect-client-app/
 ├── certs - каталог с контейнерами p12
@@ -47,7 +47,7 @@ sbp-connect-client-app/
 Установка данного модуля на сервера ПРОД, обычно осуществляется силами сотрудников банка.
 
 ====== Архитектура crypto-app
-[source,sh]
+[source,asciidoc]
 Services/
 ├── application.yml - конфигурационный файл с описанием блоков настроек
 ├── bat - скрипты по установке/удалению , запуску/остановке сервиса
@@ -75,7 +75,7 @@ Services/
 ====== Архитектура dashboard-app
 
 
-[source,sh]
+[source,asciidoc]
 sbp-connect-dashboard/
 ├── config
 │   ├── application.yml.example  - пример конфигурационного файла
