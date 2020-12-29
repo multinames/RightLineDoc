@@ -695,13 +695,12 @@ Liquibase: Update has been successful.
 
 Для запуска/остановки sbp-connect-dashboard и проверки используются следующие команды, не из под root пользователя:
 
-`sudo service service sbp-connect-domrf-client-app start` - запуск службы dashboard-app
+`sudo systemctl start sbp-connect-domrf-dashboard` - запуск службы dashboard-app
 
-`sudo service sbp-connect-domrf-dashboard stop` - остановка службы dashboard-app
+`sudo systemctl stop sbp-connect-domrf-dashboard` - остановка службы dashboard-app
 
-`sudo service sbp-connect-domrf-client-app status` - проверка состояния client-app
+`sudo systemctl status sbp-connect-domrf-dashboard` - проверка состояния client-app
 
-`sudo chkconfig sbp-connect-domrf-dashboard on` - включение автозапуска службы при загрузке
 
 == Right Line контакты
 

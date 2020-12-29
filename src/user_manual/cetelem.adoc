@@ -695,11 +695,11 @@ Liquibase: Update has been successful.
 
 Для запуска/остановки sbp-connect-dashboard и проверки используются следующие команды, не из под root пользователя:
 
-`sudo service service sbp-connect-cetelem-client-app start` - запуск службы dashboard-app
+`sudo service service sbp-connect-cetelem-dashboard start` - запуск службы dashboard-app
 
 `sudo service sbp-connect-cetelem-dashboard stop` - остановка службы dashboard-app
 
-`sudo service sbp-connect-cetelem-client-app status` - проверка состояния client-app
+`sudo service sbp-connect-cetelem-dashboard status` - проверка состояния client-app
 
 `sudo chkconfig sbp-connect-cetelem-dashboard on` - включение автозапуска службы при загрузке
 
