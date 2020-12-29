@@ -7,19 +7,19 @@
 :figure-caption: Изображение
 :version-label: Версия
 
-== Right Line СБП-Коннект. Руководство по администрированию для АО «ДОМ.РФ»
+= Right Line СБП-Коннект. Руководство по администрированию для АО «ДОМ.РФ»
 
 
-=== Общее описание
+== Общее описание
 *СБП-Коннект* предназначен для подключения кредитных организаций к Системе быстрых платежей. В данном руководстве рассматривается версия *С2С (Consumer-to-consumer)*.
 
 *СБП-Коннект* состоит из нескольких модулей, которые взаимодействуют между собой. Для постоянного хранения данных используется реляционная база данных.
 
 Каждый из модулей является отдельным приложением, реализованным в виде единого исполняемого *jar файла*, включающего в себя все необходимые библиотеки для работы.
 
-=== Основные модули СБП-Коннект
+== Основные модули СБП-Коннект
 
-==== Модуль client-app
+=== Модуль client-app
 
 Модуль реализует все основные сценарии переводов C2C. Также, модуль осуществляет взаимодействие с НСПК и интеграцию с расчетными и учетными системами Банка. Для интеграции, у client-app имеется свой API.
 [source,asciidoc]
@@ -43,7 +43,7 @@ sbp-connect-client-app/
 ├── sbp-connect-client-app.conf - конфиг с указанием кодировки JAVA_OPTS
 └── sbp-connect-client-app.jar - основной jar файл микросервиса
 
-==== Модуль crypto-app
+=== Модуль crypto-app
 Модуль реализует интеграцию с СКЗИ (СКАД «Сигнатура») и предоставляет API для использования крипто-функций. Развертывание модуля осуществляется на машинах с СКЗИ.
 Установка данного модуля на сервера ПРОД, обычно осуществляется силами сотрудников банка.
 
@@ -71,7 +71,7 @@ Services/
 └── wrapper.jar - jar файлы отвечают за запуск и установку сервиса
 
 
-==== Модуль dashboard-app
+=== Модуль dashboard-app
 Модуль представляет собой веб-приложение, которое работает во всех современных браузерах. Приложение предназначено для сотрудников Банка и предоставляет им данные по операциям, сводную статистику, результаты сверки и прочее.
 [source,asciidoc]
 .Архитектура dashboard-app
@@ -101,9 +101,9 @@ sbp-connect-dashboard/
 * папку с файлами `liquibase` для настройки базы данных (БД)
 =====
 
-=== Установка и настройка модуля Crypto-app
+== Установка и настройка модуля Crypto-app
 
-==== 1. Требования к программно-техническому обеспечению стенда
+=== 1. Требования к программно-техническому обеспечению стенда
 
 Для функционирования модуля crypto-app необходимо как минимум: 2 core x 2GHz CPU, 4Gb RAM, 60 Gb SSD/HDD.
 В качестве операционной системы может использоваться 64-битная ОС Windows 10 или Windows Server.
@@ -118,7 +118,7 @@ sbp-connect-dashboard/
 
 ==== 1.1 Настройка переменных среды окружения Windows
 
-==== Общие сведения
+*Общие сведения*
 Переменная `PATH` — это системная переменная, которую операционная система использует для того, чтобы найти нужные исполняемые объекты в командной строке или окне терминала.
 
 Системную переменную PATH можно задать с помощью системной утилиты в панели управления Windows по следующей инструкции:
@@ -261,9 +261,9 @@ trust-store: ./conf/TrustStore.p12  # путь до контейнера с до
 trust-store-password: ${ssl.password}  # пароль от контейнера с доверенными сертификатами
 client-auth: need # необходима ли проверка сертификата удаленного клиента при ssl-handshake
 
-=== Установка и настройка СБП-Коннект
+== Установка и настройка СБП-Коннект
 
-==== 1.1 Минимальные системные требования для установки
+=== 1.1 Минимальные системные требования для установки
 
 Для построения отказоустойчивой системы, потребуется как минимум два виртуальных (или физических) хоста - один для установки модулей, второй для размещения базы данных и балансировщик сетевой нагрузки.
 
@@ -405,26 +405,30 @@ WARNING: basicAuthUserPass для поля password, в таблице SBP_CONNE
 
 [source,sql]
 .Значения ошибок НСПК
-insert into nspk_response_code (response_code, message) values ('I05001', 'Недостаточно данных об Отправителе или Получателе');
-insert into nspk_response_code (response_code, message) values ('B05002', 'Невозможно зачислить сумму перевода на счет Получателя');
-insert into nspk_response_code (response_code, message) values ('I05008', 'Нет такого значения ЭБД {24} Идентификатор Банка Получателя (ИД БП)');
-insert into nspk_response_code (response_code, message) values ('I05014', 'Нет такого значения ЭБД {47} Тип Идентификатора Получателя (ТИД ПО)');
-insert into nspk_response_code (response_code, message) values ('I05021', 'PAM Отправителя и Получателя не совпали (только для Me2Me)');
-insert into nspk_response_code (response_code, message) values ('I05037', 'Ограничения законодательства');
-insert into nspk_response_code (response_code, message) values ('B05005', 'Запрещено кредитование счета Получателя');
-insert into nspk_response_code (response_code, message) values ('B05006', 'Найден больше чем один Получатель');
-insert into nspk_response_code (response_code, message) values ('B05007', 'Не найден Получатель');
-insert into nspk_response_code (response_code, message) values ('B05008', 'Ограничения законодательства на зачисление (например, сумма превысила допустимую для данного платежного средства или уровень идентификации недостаточен)');
-insert into nspk_response_code (response_code, message) values ('B05009', 'Получатель не дал согласие на получение средств через СБП');
-insert into nspk_response_code (response_code, message) values ('B05010', 'Получатель отказался от получения средств через СБП');
-insert into nspk_response_code (response_code, message) values ('B05011', 'Счет Получателя заблокирован или закрыт');
-insert into nspk_response_code (response_code, message) values ('B05013', 'Счет Получателя не найден');
-insert into nspk_response_code (response_code, message) values ('DEFAULT', 'Технологические работы в Банке получателя. Попробуйте повторить перевод через некоторое время.');
-insert into nspk_response_code (response_code, message) values ('I05999', 'Технологические работы в Банке получателя. Попробуйте повторить перевод через некоторое время.');
-insert into nspk_response_code (response_code, message) values ('I05043', 'Свяжитесь с Получателем средств и уточните реквизиты для зачисления денежных средств.');
-insert into nspk_response_code (response_code, message) values ('I07002', 'Превышено время ожидания ответа. Пожалуйста, повторите перевод позже.');
-insert into nspk_response_code (response_code, message) values ('I01091', 'Превышено время ожидания ответа. Пожалуйста, повторите перевод позже.');
-insert into nspk_response_code (response_code, message) values ('I04010', 'Превышено время ожидания ответа. Пожалуйста, повторите перевод позже.');
+INSERT INTO "public"."nspk_response_code" VALUES ('DEFAULT', 'Неизвестная ошибка', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('I05001', 'Недостаточно данных об Отправителе или Получателе', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('B05002', 'Невозможно зачислить сумму перевода на счет Получателя', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('I05008', 'Нет такого значения ЭБД {24} Идентификатор Банка Получателя (ИД БП)', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('I05014', 'Нет такого значения ЭБД {47} Тип Идентификатора Получателя (ТИД ПО)', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('I05021', 'PAM Отправителя и Получателя не совпали (только для Me2Me)', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('I05037', 'Ограничения законодательства', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('I05038', 'Ограничения законодательства', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('B05005', 'Запрещено кредитование счета Получателя', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('B05006', 'Найден больше чем один Получатель', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('B05007', 'Не найден Получатель', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('B05008', 'Ограничения законодательства на зачисление (например, сумма превысила допустимую для данного платежного средства или уровень идентификации недостаточен)', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('B05009', 'Получатель не дал согласие на получение средств через СБП', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('B05010', 'Получатель отказался от получения средств через СБП', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('B05011', 'Счет Получателя заблокирован или закрыт', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('B05013', 'Счет Получателя не найден', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('I05999', 'Технологические работы в Банке получателя. Попробуйте повторить перевод через некоторое время.', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('I07002', 'Превышено время ожидания ответа. Пожалуйста, повторите перевод позже.', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('I01091', 'Превышено время ожидания ответа. Пожалуйста, повторите перевод позже.', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('I04010', 'Превышено время ожидания ответа. Пожалуйста, повторите перевод позже.', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('I05043', 'Свяжитесь с Получателем средств и уточните реквизиты для зачисления денежных средств.', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('I05019', 'OTP введен неверно. Операция завершена', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('I05020', 'OTP введен неверно. Повторите ввод.', NULL, NULL);
+INSERT INTO "public"."nspk_response_code" VALUES ('I07005', 'Превышенно допустимое количество попыток по установке Банка по умолчанию в день', NULL, NULL);
 
 ==== 1.6 Настройка модуля client-app
 
@@ -546,7 +550,7 @@ proxy_pass http://localhost:8080;
 * логи взаимодействия с крипто-сервисом - {yyyy-MM-dd}.crypto.log
 * все остальные логи(в том числе и от dashboard-app)-  {yyyy-MM-dd}.root.log
 
-=== Обновление модулей СБП-Коннект
+== Обновление модулей СБП-Коннект
 
 Дистрибутив с обновлением обычно поставляется в виде zip-архива `sbp-connect-domrf-{версия_релиза}-RELEASE.zip`
 
@@ -562,7 +566,7 @@ proxy_pass http://localhost:8080;
 
 Перед обновлением нужного модуля необходимо остановить службу sbp-connect-client-app или sbp-connect-dashboard
 
-==== 2.1 Остановка службы
+=== 2.1 Остановка службы
 
 
 .Для остановки службы, используется следующая команда, не из под root пользователя:
@@ -575,7 +579,7 @@ sudo service sbp-connect-domrf-client-app stop
 service sbp-connect-domrf-client-app status
 ----
 
-==== 2.2 Обновление модуля
+=== 2.2 Обновление модулей
 
 Архив с дистрибутивом необходимо распаковать во временную папку на удаленном комьютере или скопировать на удаленный компьютер уже в распакованном состоянии.
 
@@ -596,7 +600,7 @@ sudo rpm -Uvh --force <имя_пакета>.rpm
 В директории /opt/sbp-connect-domrf-client-app/ присутствует файл sbp-connect-domrf-client-app-{версия_релиза}.conf,
 который по имени должен совпадать с именем исполняемого jar-файла, находящегося в этой же папке.
 
-==== 2.3 Обновления базы данных.
+=== 2.3 Обновления базы данных.
 
 Перед обновлением схемы базы данных(БД), нужно сделать полный бэкап базы. Для развёртывания компонентов схемы применяется библиотека Liquibase, всё необходимое находится в директории liquibase, включая пример конфигурационного файла liquibase.properties.example.
 
@@ -613,11 +617,15 @@ url = jdbc:oracle:thin:@ip:port/dbName
 
 Сделайте файл скрипта исполняемым с помощью команды:
 
-`chmod +x run.sh`
+----
+chmod +x run.sh
+----
 
 Запустите скрипт командой:
 
-`./run.sh update`
+----
+./run.sh update
+----
 
 При запуске, скрипт потребует ввода имени пользователя - владельца рабочей схемы БД (либо иного пользователя БД, имеющего право записи в используемую схему) и его пароля.
 
